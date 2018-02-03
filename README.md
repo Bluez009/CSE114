@@ -1,4 +1,4 @@
-# School-Work-CSE114
+# School Work from CSE114
 Project Folder:
 The project takes the contents of two text files, carddata2 and transactiondata2.
 Each card, and transaction class are used to take in the 2 text files and read its content, creating cards (debit, rewards, or prepaid) with the card holder name, ID number, and expiration. It then reads the transactions made on each one, listing the purchases made and its amount spent on said card. It also has fraud detection where if the person had purchased two items that are below a certain threshold, then it would not get included with the transactions.
