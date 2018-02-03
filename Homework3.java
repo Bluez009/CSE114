@@ -36,40 +36,38 @@ public class Homework3 {
 		String line = fileName;
 		String whole = "";
 		while ((line = br.readLine()) != null) {
-			whole += translateMarkdown(line);
+			whole += translateMarkdown(line);	    
 			whole += "\n";
 			}
 		br.close();
 		return whole;
 	}
-
-	// Regular expressions is a powerful tool here
-	// Not the most effiecient way to handle the problem but solves it well enough
+	
 	public static String translateMarkdown(String line) {
-		//(1)translateEmphasis
-	   	line = line.replaceAll("\\*\\*([^ ].*?[^ ])\\*\\*", "<strong>$1</strong>");
-		//(2)translateStrongEmphasis
-	   	line = line.replaceAll("\\*([^ ].*?[^ ])\\*", "<em>$1</em>");
-		//(5)translateCode
-    	line = line.replaceAll("`(.*?)`", "<code>$1</code>");
+    //(1)translateEmphasis
+	   	line = line.replaceAll("\\*\\*([^ ].*?[^ ])\\*\\*", "<strong>$1</strong>");		
+	//(2)translateStrongEmphasis
+	   	line = line.replaceAll("\\*([^ ].*?[^ ])\\*", "<em>$1</em>");	
+   	//(5)translateCode
+    	line = line.replaceAll("`(.*?)`", "<code>$1</code>");							    	
     	line = line.replaceAll("<code>\\s+(.*?)\\s+</code>","<code>$1</code>");	//used to remove leftover spaces
-		//(4)translateImage
-	   	line = line.replaceAll("!\\[(.*2?)\\]\\((.*1?)\\ï¿½(.*3?)\\ï¿½\\)", "<img src=\"$2\" alt=\"$1\" title=\"$3\">");
-	   	line = line.replaceAll("src=\"\\s+(.*?)\\s+\"", "src=\"$1\"");
+    //(4)translateImage
+	   	line = line.replaceAll("!\\[(.*2?)\\]\\((.*1?)\\“(.*3?)\\”\\)", "<img src=\"$2\" alt=\"$1\" title=\"$3\">");
+	   	line = line.replaceAll("src=\"\\s+(.*?)\\s+\"", "src=\"$1\""); 
 	   	line = line.replaceAll("src=\"(.*?)\\s+\"", "src=\"$1\"");
     	line = line.replaceAll("src=\"\\s+(.*?)\"", "src=\"$1\"");
-		//(3)translateLinks
+    //(3)translateLinks
 	   	line = line.replaceAll("\\[(.*1?)\\]\\((.*2?)\\)", "<a href=\"$2\">$1</a>");
 	   	line = line.replaceAll("href=\"\\s+(.*?)\\s+\">", "href=\"$1\">");
 	   	line = line.replaceAll("href=\"\\s+(.*?)\">", "href=\"$1\">");
 	   	line = line.replaceAll("href=\"(.*?)\\s\">", "href=\"$1\">");
-		//(6)translateLists
+   	//(6)translateLists
 	   	line = line.replaceAll("\\+\\s(.*?)$", "<li>$1</li>");
-		//cut spaces at beginning and end
+	//cut spaces at beginning and end
 	   	line = line.trim();
 	   	return line;
     }
-
+	
 	public static String translateMarkdown2(String whole) {
 	//Paragraphs
 		whole = whole.replaceAll("<body>\n(.*?)", "<body>\n<p>$1");
