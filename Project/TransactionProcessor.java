@@ -112,26 +112,33 @@ public class TransactionProcessor {
                 }
                 
                 else {
-                	words[3] = words [3].replace("_", " ");
-                	Transaction curr = new Transaction(transactionType,words[3], Double.parseDouble(words[2]));
+                    Transaction curr = new Transaction(transactionType,words[3], Double.parseDouble(words[2]));
                     BankCard card = c.get(index);
                     Transaction last = (Transaction) card.getLastTransaction();
                                        
-                    if (last == null || (curr.type() != last.type() && curr.merchant() != last.merchant() 
-                    		&& (curr.amount() >= 1.50 || curr.amount() <= -1.50) 
-                    		&& (last.amount() >= 1.50 || last.amount() <= -1.50)
-                    		)) {
-                    	if (card.getCanAddTransaction())
-                    		card.addTransaction(curr);
-                    } else {
-                    	System.out.println("Fixed " + card.cardHolder());
-                    	card.flagFraud();
-                    	card.fixFraud(curr);
+                    if(checkFraud(curr, last)) {
+                        System.out.println("Fixed " + card.cardHolder());
+                        card.flagFraud();
+                        card.fixFraud(curr);
+                    } else if (card.getCanAddTransaction()) {
+                        card.addTransaction(curr);
                     }
                 }
-            }
+               }
 	    }
 
+	private static boolean checkFraud(Transaction first, Transaction second) {
+		if (first == null || second == null)
+			return false;
+		if (first.type().equals(second.type()) && first.merchant().equals(second.merchant())) {
+			if (first.type().equals("debit") && first.amount() <= 1.5 && second.amount() <= 1.5)
+				return true;
+			if (first.type().equals("credit") && first.amount() >= -1.5 && second.amount() >= -1.5)
+				return true;
+			return false;
+	        }
+	        return false;
+	    }
 	private static String getCardType(long number) {
 		// Return a String indicating whether 'number' belongs to a
 		// CreditCard, RewardsCard, or a PrepaidCard (or null if it's none
