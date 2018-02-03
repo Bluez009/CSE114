@@ -8,19 +8,20 @@ import java.util.*;
 public class Homework3 {
 // Used Markdown dingus website as a reference
 	public static void main(String[] args) throws Exception {
-			Scanner input = new Scanner(System.in);
-			System.out.println("Enter the name of your file");
-			String fileName = input.nextLine();
-			System.out.println("Create name for output file with extension:");
-	    	String fileName2 = input.nextLine();
-	        File outputFile = new File(fileName2);		//create file2 to store the converted text
-			PrintWriter pw2 = new PrintWriter(outputFile);
-			FileReader fileReader = new FileReader(fileName);
-			BufferedReader br = new BufferedReader(fileReader);
-			String whole = readFile(fileName, br);
-			System.out.println("\n------------------------------\n"
-					+ "New Output file '" + fileName2 + "' created with the converted text below."
-							+ "\n------------------------------");
+		Scanner input = new Scanner(System.in);
+		System.out.println("Enter the name of your file");
+		String fileName = input.nextLine();
+		//String fileName = "markdowntest.txt";
+		System.out.println("Create name for output file with '.txt' extension:");
+		String fileName2 = input.nextLine();
+		File outputFile = new File(fileName2);		//create file2 to store the converted text
+		PrintWriter pw2 = new PrintWriter(outputFile);
+		FileReader fileReader = new FileReader(fileName);
+		BufferedReader br = new BufferedReader(fileReader);
+		String whole = readFile(fileName, br);
+		System.out.println("\n------------------------------------------------------------------\n"
+				+ "New Output file '" + fileName2 + "' created with the converted text below."
+				+ "\n------------------------------------------------------------------");
 		//Adding Header and Footer to string
 			String header = "<!DOCTYPE html>\n<html>\n<head>\n<title>Results of Markdown Translation</title>\n</head>\n<body>\n";
 			String footer = "</body>\n</html>";
